@@ -33,8 +33,8 @@ export type TOrdersData = {
 };
 
 export type TUser = {
-  email: string;
-  name: string;
+  email: string | '';
+  name: string | '';
 };
 
 export type TTabMode = 'bun' | 'sauce' | 'main';
