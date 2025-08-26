@@ -50,6 +50,9 @@ const burgerSlice = createSlice({
       state.ingredients = state.ingredients.filter(
         (_, index) => index !== action.payload
       );
+    },
+    clearOrderData(state) {
+      state.lastOrder = null;
     }
   },
   extraReducers(builder) {
@@ -88,5 +91,10 @@ export const orderBurger = createAsyncThunk<
 );
 
 export const burgerReducer = burgerSlice.reducer;
-export const { addIngredient, removeIngredient, moveIngredient, setBun } =
-  burgerSlice.actions;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  setBun,
+  clearOrderData
+} = burgerSlice.actions;

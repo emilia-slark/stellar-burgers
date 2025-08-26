@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from '@store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@hooks';
-import { orderBurger } from '@slices';
+import { clearOrderData, orderBurger } from '@slices';
 
 export const BurgerConstructor: FC = () => {
   const location = useLocation();
@@ -36,7 +36,8 @@ export const BurgerConstructor: FC = () => {
   };
 
   const closeOrderModal = () => {
-    navigate('/feed');
+    if (orderRequest) return;
+    dispatch(clearOrderData());
   };
 
   const price = useMemo(
