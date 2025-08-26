@@ -1,12 +1,17 @@
-import { orderBurgerApi, TAuthResponse, TNewOrderResponse } from '@api';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient, TOrder } from '@utils-types';
+import { orderBurgerApi, TAuthResponse } from '@api';
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  nanoid
+} from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
 export const BURGER_SLICE_NAME = 'burger';
 
 interface BurgerState {
   bun: TIngredient | null;
-  ingredients: TIngredient[];
+  ingredients: TConstructorIngredient[];
   lastOrder: TOrder | null;
   isOrdering: boolean;
   error?: string;
@@ -26,10 +31,16 @@ const burgerSlice = createSlice({
     setBun(state, action: PayloadAction<TIngredient>) {
       state.bun = action.payload;
     },
-    addIngredient(state, action: PayloadAction<TIngredient>) {
-      if (action.payload.type === 'bun') {
-        state.bun = action.payload;
-      } else state.ingredients.push(action.payload);
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.bun = action.payload;
+        } else state.ingredients.push(action.payload);
+      },
+      prepare: (ingredient: TIngredient) => {
+        const key = nanoid();
+        return { payload: { ...ingredient, id: key } };
+      }
     },
     moveIngredient(
       state,
