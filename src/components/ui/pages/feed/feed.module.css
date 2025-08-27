@@ -28,7 +28,8 @@
 }
 
 .columnInfo {
-  overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
+  overflow: hidden;
   width: 580px;
 }
